@@ -22,18 +22,26 @@ function App() {
     getPokemons();
   }, []);
 
+  useEffect(() => {
+    setPageNumber(1);
+  }, [typesSelectedArray]);
+
   return (
     <>
       <Search
         typesSelectedArray={typesSelectedArray}
         setTypesSelectedArray={setTypesSelectedArray}
       />
+
+      <h1>Page number {pageNumber}</h1>
+
       <FilteredPokemon
         pokemons={pokemons}
         typesSelectedArray={typesSelectedArray}
         setPokemonCount={setPokemonCount}
         pageNumber={pageNumber}
       />
+
       <Pagination
         pokemonCount={pokemonCount}
         pageNumber={pageNumber}
