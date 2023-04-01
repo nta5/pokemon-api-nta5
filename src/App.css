@@ -1,0 +1,14 @@
+.pokemon-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.pokemon-image {
+  min-width: 150px;
+  width: 15vw;
+}
+
+.selected {
+  background-color: yellow;
+}

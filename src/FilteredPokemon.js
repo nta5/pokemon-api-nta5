@@ -1,37 +1,43 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { type } from "@testing-library/user-event/dist/type";
+import React from "react";
 
-function FilteredPokemon({ typesSelectedArray }) {
-  const [pokemons, setPokemons] = useState([]);
+function FilteredPokemon({
+  pokemons,
+  typesSelectedArray,
+  setPokemonCount,
+  pageNumber,
+}) {
+  const pokemonPerPage = 10;
+  const startIndex = (pageNumber - 1) * pokemonPerPage;
+  const endIndex = startIndex + pokemonPerPage;
 
-  useEffect(() => {
-    async function fetchPokemon() {
-      const response = await axios.get(
-        "https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/pokedex.json"
-      );
-      setPokemons(response.data);
-    }
-    fetchPokemon();
-  }, []);
-
-  const filterTypes = (pokemonType) => {
+  const filterTypes = (pokemon) => {
     if (typesSelectedArray.length == 0) {
       return true;
     } else {
-      return typesSelectedArray.every((type) => pokemonType.includes(type));
+      return typesSelectedArray.every((type) => pokemon.type.includes(type));
     }
   };
+
+  pokemons = pokemons.filter(filterTypes);
+  setPokemonCount(pokemons.length);
+  pokemons = pokemons.slice(startIndex, endIndex);
+
   return (
-    <div>
-      {pokemons.map(
-        (pokemon) =>
-          filterTypes(pokemon.type) && (
-            <div key={pokemon.id}>
-              {pokemon.name.english}, {pokemon.type}
-            </div>
-          )
-      )}
+    <div class="pokemon-container">
+      {pokemons.map((pokemon) => (
+        <div key={pokemon.id}>
+          <img
+            class="pokemon-image"
+            src={`https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/${String(
+              pokemon.id
+            ).padStart(3, "0")}.png`}
+            alt={pokemon.name.english}
+          />
+          <div>
+            {pokemon.name.english}, {pokemon.type}
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
