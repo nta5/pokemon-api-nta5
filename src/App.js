@@ -18,6 +18,7 @@ function App() {
       );
 
       setPokemons(res.data);
+      setPokemonCount(res.data.length);
     }
     getPokemons();
   }, []);

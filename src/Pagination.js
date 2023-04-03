@@ -16,7 +16,7 @@ function Pagination({ pokemonCount, pageNumber, setPageNumber }) {
         .map((page, index) => {
           return (
             <button
-              class={index + 1 === pageNumber ? "selected" : ""}
+              className={index + 1 === pageNumber ? "selected" : ""}
               key={index}
               onClick={() => setPageNumber(index + 1)}
             >
