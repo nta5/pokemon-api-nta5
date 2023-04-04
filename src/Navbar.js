@@ -1,10 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Login from "./Login";
 import App from "./App";
 import PokemonInfo from "./PokemonInfo";
+import axios from "axios";
 import { Routes, Route, Link } from "react-router-dom";
 
 function Navbar() {
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    try {
+      if (sessionStorage.getItem("user")) {
+        setUser(JSON.parse(sessionStorage.getItem("user")));
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
+  const logout = () => {
+    const start = async () => {
+      try {
+        const authToken = user.authToken;
+        await axios.post(
+          "http://localhost:3001/logout",
+          {},
+          {
+            headers: {
+              authorization: authToken,
+            },
+          }
+        );
+        sessionStorage.removeItem("user");
+        setUser({});
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    start();
+  };
+
   return (
     <div>
       <ul>
@@ -14,11 +49,19 @@ function Navbar() {
         <li>
           <Link to="/app">App</Link>
         </li>
+        {user?.username && (
+          <li>
+            <Link to="/logout" onClick={logout}>
+              Logout
+            </Link>
+          </li>
+        )}
       </ul>
       <Routes>
         <Route path="/app" element={<App />} />
         <Route path="/pokeInfo" element={<PokemonInfo />} />
-        <Route path="/*" element={<Login />}>
+        <Route path="/logout" element={<>Logged out</>} />
+        <Route path="/*" element={<Login user={user} setUser={setUser} />}>
           <Route path="report/:id" element={<></>} />
         </Route>
       </Routes>

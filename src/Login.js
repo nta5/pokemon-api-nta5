@@ -3,12 +3,12 @@ import axios from "axios";
 import Dashboard from "./Dashboard";
 import { Outlet } from "react-router-dom";
 
-function Login() {
+function Login({ user, setUser }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [user, setUser] = useState({});
   const [accessToken, setAccessToken] = useState("");
   const [refreshToken, setRefreshToken] = useState("");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -16,7 +16,15 @@ function Login() {
         username,
         password,
       });
-      setUser(res.data.user);
+
+      const storedUser = {
+        username: res.data.user.username,
+        role: res.data.user.role,
+        authToken: res.headers["authorization"],
+      };
+
+      sessionStorage.setItem("user", JSON.stringify(storedUser));
+      setUser(storedUser);
 
       var authorizationTokens = res.headers["authorization"];
       const bearerToken = authorizationTokens
@@ -36,14 +44,20 @@ function Login() {
   return (
     <div>
       {user?.username ? (
-        <>
-          <h1>Welcome {user.username}</h1>
-          <Dashboard
-            accessToken={accessToken}
-            setAccessToken={setAccessToken}
-            refreshToken={refreshToken}
-          />
-        </>
+        user?.role == "admin" ? (
+          <>
+            <h1>Welcome {user.username}</h1>
+            <Dashboard
+              accessToken={accessToken}
+              setAccessToken={setAccessToken}
+              refreshToken={refreshToken}
+            />
+          </>
+        ) : (
+          <>
+            <h1>Welcome {user.username}</h1>
+          </>
+        )
       ) : (
         <form onSubmit={handleSubmit}>
           <span> Admin Login </span>

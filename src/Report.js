@@ -51,6 +51,9 @@ function Report({ accessToken, setAccessToken, refreshToken }) {
       const decodedToken = jwt_decode(accessToken);
       if (decodedToken.exp * 1000 < currentDate.getTime()) {
         const newToken = await refreshAccessToken();
+        var newUserObj = JSON.parse(sessionStorage.getItem("user"));
+        newUserObj.authToken = newToken;
+        sessionStorage.setItem("user", JSON.stringify(newUserObj));
         config.headers["authorization"] = newToken;
         const newAccessToken = newToken.split(";")[0].replace("Bearer=", "");
         setAccessToken(newAccessToken);
