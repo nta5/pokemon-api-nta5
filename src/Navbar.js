@@ -22,6 +22,8 @@ function Navbar() {
     const start = async () => {
       try {
         const authToken = user.authToken;
+        sessionStorage.removeItem("user");
+        setUser({});
         await axios.post(
           "http://localhost:3001/logout",
           {},
@@ -31,8 +33,6 @@ function Navbar() {
             },
           }
         );
-        sessionStorage.removeItem("user");
-        setUser({});
       } catch (err) {
         console.log(err);
       }
