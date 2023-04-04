@@ -21,32 +21,18 @@ function Dashboard({ accessToken, setAccessToken, refreshToken }) {
           <li>
             <Link to="/report/3">Report 3 - Top users for each Endpoint</Link>
           </li>
+          <li>
+            <Link to="/report/4">Report 4 - 4xx Errors By Endpoint</Link>
+          </li>
+          <li>
+            <Link to="/report/5">Report 5 - Recent 4xx/5xx Errors</Link>
+          </li>
         </ul>
       </nav>
 
       <Routes>
         <Route
-          path="/report/1"
-          element={
-            <Report
-              accessToken={accessToken}
-              setAccessToken={setAccessToken}
-              refreshToken={refreshToken}
-            />
-          }
-        />
-        <Route
-          path="/report/2"
-          element={
-            <Report
-              accessToken={accessToken}
-              setAccessToken={setAccessToken}
-              refreshToken={refreshToken}
-            />
-          }
-        />
-        <Route
-          path="/report/3"
+          path="/report/:id"
           element={
             <Report
               accessToken={accessToken}
