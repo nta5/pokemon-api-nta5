@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
+import { useParams } from "react-router-dom";
 
-function Report({ id, accessToken, setAccessToken, refreshToken }) {
+function Report({ accessToken, setAccessToken, refreshToken }) {
+  const { id } = useParams();
   const [reportTable, setReportTable] = useState("");
   useEffect(() => {
     const start = async () => {

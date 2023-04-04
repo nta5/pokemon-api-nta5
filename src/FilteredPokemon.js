@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 function FilteredPokemon({
   pokemons,
@@ -24,23 +25,27 @@ function FilteredPokemon({
   }, [typesSelectedArray]);
 
   return (
-    <div className="pokemon-container">
-      {pokemons
-        .map((pokemon) => (
-          <div key={pokemon.id}>
-            <img
-              className="pokemon-image"
-              src={`https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/${String(
-                pokemon.id
-              ).padStart(3, "0")}.png`}
-              alt={pokemon.name.english}
-            />
-            <div>
-              {pokemon.name.english}, {pokemon.type}
+    <div>
+      <div className="pokemon-container">
+        {pokemons
+          .map((pokemon) => (
+            <div key={pokemon.id}>
+              <Link to="/pokeInfo" state={{ pokeInfo: pokemon }}>
+                <img
+                  className="pokemon-image"
+                  src={`https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/${String(
+                    pokemon.id
+                  ).padStart(3, "0")}.png`}
+                  alt={pokemon.name.english}
+                />
+                <div>
+                  {pokemon.name.english}, {pokemon.type}
+                </div>
+              </Link>
             </div>
-          </div>
-        ))
-        .slice(startIndex, endIndex)}
+          ))
+          .slice(startIndex, endIndex)}
+      </div>
     </div>
   );
 }

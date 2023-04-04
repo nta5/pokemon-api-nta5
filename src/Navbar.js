@@ -1,6 +1,7 @@
 import React from "react";
 import Login from "./Login";
 import App from "./App";
+import PokemonInfo from "./PokemonInfo";
 import { Routes, Route, Link } from "react-router-dom";
 
 function Navbar() {
@@ -8,15 +9,18 @@ function Navbar() {
     <div>
       <ul>
         <li>
-          <Link to="/login">Login</Link>
+          <Link to="/">Login</Link>
         </li>
         <li>
-          <Link to="/">App</Link>
+          <Link to="/app">App</Link>
         </li>
       </ul>
       <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/app" element={<App />} />
+        <Route path="/pokeInfo" element={<PokemonInfo />} />
+        <Route path="/*" element={<Login />}>
+          <Route path="report/:id" element={<></>} />
+        </Route>
       </Routes>
     </div>
   );
