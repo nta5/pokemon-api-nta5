@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Dashboard from "./Dashboard";
+import Dashboard from "./Account/Dashboard";
 import { Outlet } from "react-router-dom";
 
 function Login({ user, setUser }) {

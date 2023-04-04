@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Login from "./Login";
 import App from "./App";
-import PokemonInfo from "./PokemonInfo";
+import PokemonInfo from "./Pokedex/PokemonInfo";
 import axios from "axios";
 import { Routes, Route, Link } from "react-router-dom";
 

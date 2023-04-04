@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Search from "./Search";
-import FilteredPokemon from "./FilteredPokemon";
-import Pagination from "./Pagination";
+import Search from "./Pokedex/Search";
+import FilteredPokemon from "./Pokedex/FilteredPokemon";
+import Pagination from "./Pokedex/Pagination";
 import axios from "axios";
 import "./App.css";
 
