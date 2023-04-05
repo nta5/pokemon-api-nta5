@@ -18,7 +18,7 @@ function Report({ accessToken, setAccessToken, refreshToken }) {
             },
           }
         );
-        setReportTable(res.data);
+        setReportTable(JSON.stringify(res.data));
       } catch (err) {
         console.log(err);
       }
