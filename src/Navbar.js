@@ -68,9 +68,7 @@ function Navbar() {
         <Route path="/pokeInfo" element={<PokemonInfo />} />
         <Route path="/register" element={<Register />} />
         <Route path="/logout" element={<>Logged out</>} />
-        <Route path="/*" element={<Login user={user} setUser={setUser} />}>
-          <Route path="report/:id" element={<></>} />
-        </Route>
+        <Route path="/*" element={<Login user={user} setUser={setUser} />} />
       </Routes>
     </div>
   );

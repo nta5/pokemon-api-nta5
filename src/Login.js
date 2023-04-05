@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Dashboard from "./Account/Dashboard";
-import { Outlet } from "react-router-dom";
 
 function Login({ user, setUser }) {
   const [username, setUsername] = useState("");
@@ -77,7 +76,6 @@ function Login({ user, setUser }) {
           <button type="submit">Login</button>
         </form>
       )}
-      <Outlet />
     </div>
   );
 }
