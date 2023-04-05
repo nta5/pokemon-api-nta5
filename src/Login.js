@@ -60,7 +60,7 @@ function Login({ user, setUser }) {
         )
       ) : (
         <form onSubmit={handleSubmit}>
-          <span> Admin Login </span>
+          <span> Login </span>
           <br />
           <input
             type="text"
