@@ -1,12 +1,47 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Dashboard from "./Account/Dashboard";
 
-function Login({ user, setUser }) {
+function Login({ user, setUser, userRef }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [accessToken, setAccessToken] = useState("");
   const [refreshToken, setRefreshToken] = useState("");
+
+  useEffect(() => {
+    try {
+      if (sessionStorage.getItem("user")) {
+        var check = JSON.parse(sessionStorage.getItem("user")).authToken;
+        if (check == null) {
+          return;
+        }
+        userRef.current = JSON.parse(sessionStorage.getItem("user"));
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    setUser(userRef.current);
+  }, []);
+
+  useEffect(() => {
+    if (user?.authToken) {
+      var authorizationTokens = user.authToken;
+      const bearerToken = authorizationTokens
+        .split(";")[0]
+        .replace("Bearer=", "");
+      const refreshToken = authorizationTokens
+        .split(";")[1]
+        .replace("Refresh=", "");
+
+      setAccessToken(bearerToken);
+      setRefreshToken(refreshToken);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (userRef.current)
+      userRef.current.authToken = `Bearer=${accessToken};Refresh=${refreshToken}`;
+  }, [accessToken]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,17 +59,6 @@ function Login({ user, setUser }) {
 
       sessionStorage.setItem("user", JSON.stringify(storedUser));
       setUser(storedUser);
-
-      var authorizationTokens = res.headers["authorization"];
-      const bearerToken = authorizationTokens
-        .split(";")[0]
-        .replace("Bearer=", "");
-      const refreshToken = authorizationTokens
-        .split(";")[1]
-        .replace("Refresh=", "");
-
-      setAccessToken(bearerToken);
-      setRefreshToken(refreshToken);
     } catch (err) {
       console.log(err);
     }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Login from "./Login";
 import App from "./App";
 import PokemonInfo from "./Pokedex/PokemonInfo";
@@ -7,12 +7,18 @@ import { Routes, Route, Link } from "react-router-dom";
 import Register from "./Account/Register";
 
 function Navbar() {
-  const [user, setUser] = useState({});
+  const userRef = useRef(null);
+  const [user, setUser] = useState("");
 
   useEffect(() => {
     try {
       if (sessionStorage.getItem("user")) {
-        setUser(JSON.parse(sessionStorage.getItem("user")));
+        var check = JSON.parse(sessionStorage.getItem("user")).authToken;
+        if (check == null) {
+          return;
+        }
+        userRef.current = JSON.parse(sessionStorage.getItem("user"));
+        setUser(userRef.current);
       }
     } catch (err) {
       console.log(err);
@@ -25,6 +31,7 @@ function Navbar() {
         const authToken = user.authToken;
         sessionStorage.removeItem("user");
         setUser({});
+        userRef.current = null;
         await axios.post(
           "http://localhost:3001/logout",
           {},
@@ -68,7 +75,10 @@ function Navbar() {
         <Route path="/pokeInfo" element={<PokemonInfo />} />
         <Route path="/register" element={<Register />} />
         <Route path="/logout" element={<>Logged out</>} />
-        <Route path="/*" element={<Login user={user} setUser={setUser} />} />
+        <Route
+          path="/*"
+          element={<Login user={user} setUser={setUser} userRef={userRef} />}
+        />
       </Routes>
     </div>
   );
