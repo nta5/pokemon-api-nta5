@@ -46,7 +46,7 @@ function Report({ id, accessToken, setAccessToken, refreshToken }) {
               },
             ],
           };
-          return <BarChart chartData={config} chartTitle={title} />;
+          return <LineChart chartData={config} chartTitle={title} />;
         case 2:
           var title = "Top API users over the last 7 days";
           var trackingDates = data.map((item) => item.user);
@@ -63,9 +63,86 @@ function Report({ id, accessToken, setAccessToken, refreshToken }) {
           };
           return <BarChart chartData={config} chartTitle={title} />;
         case 3:
-          return JSON.stringify(data);
+          var keysArray = Object.keys(data[0]);
+          return (
+            <table>
+              <thead>
+                <tr key="report-3-header">
+                  <th></th>
+                  {keysArray.map((key) => (
+                    <th colSpan="2" key={key}>
+                      {key}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr key={`report-3-${1}`}>
+                  <td>1</td>
+                  {keysArray.map((key) => (
+                    <React.Fragment key={`report-3-${1}-${key}-user`}>
+                      <td>{data[0][key][0].user}</td>
+                      <td>{data[0][key][0].count}</td>
+                    </React.Fragment>
+                  ))}
+                </tr>
+                <tr key={`report-3-${2}`}>
+                  <td>2</td>
+                  {keysArray.map((key) => (
+                    <React.Fragment key={`report-3-${2}-${key}-user`}>
+                      <td>{data[0][key][1].user}</td>
+                      <td>{data[0][key][1].count}</td>
+                    </React.Fragment>
+                  ))}
+                </tr>
+                <tr key={`report-3-${3}`}>
+                  <td>3</td>
+                  {keysArray.map((key) => (
+                    <React.Fragment key={`report-3-${3}-${key}-user`}>
+                      <td>{data[0][key][2].user}</td>
+                      <td>{data[0][key][2].count}</td>
+                    </React.Fragment>
+                  ))}
+                </tr>
+              </tbody>
+            </table>
+          );
         case 4:
-          return JSON.stringify(data);
+          var keysArray = Object.keys(data[0]);
+
+          return (
+            <table>
+              <thead>
+                <tr key="report-4-header">
+                  <th>Endpoint</th>
+                  <th>Error Code</th>
+                  <th>Message</th>
+                  <th>Count</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {keysArray.map((key) => (
+                  <React.Fragment key={`report-4-${key}`}>
+                    {data[0][key].map((item, index) => (
+                      <tr key={`report-4-${key}-${index}`}>
+                        <td
+                          rowSpan={data[0][key].length}
+                          style={{ display: index != 0 ? "none" : "" }}
+                        >
+                          {key}
+                        </td>
+                        <td>{item.error_code}</td>
+                        <td>{item.message}</td>
+                        <td>{item.count}</td>
+                      </tr>
+                    ))}
+                  </React.Fragment>
+                ))}
+              </tbody>
+            </table>
+          );
         case 5:
           const options = {
             year: "numeric",
@@ -77,24 +154,32 @@ function Report({ id, accessToken, setAccessToken, refreshToken }) {
           };
           return (
             <table>
-              <tr>
-                <th>Timestamp</th>
-                <th>Endpoint</th>
-                <th>Error Code</th>
-                <th>Error Message</th>
-                <th>User</th>
-              </tr>
-              {data.map((item) => (
-                <tr>
-                  <td>
-                    {new Date(item.timestamp).toLocaleString("en-us", options)}
-                  </td>
-                  <td>{item.endpoint}</td>
-                  <td>{item.response_code}</td>
-                  <td>{item.message}</td>
-                  <td>{item.user}</td>
+              <thead>
+                <tr key="report-5-header">
+                  <th>Timestamp</th>
+                  <th>Endpoint</th>
+                  <th>Error Code</th>
+                  <th>Error Message</th>
+                  <th>User</th>
                 </tr>
-              ))}
+              </thead>
+
+              <tbody>
+                {data.map((item) => (
+                  <tr key={`report-5-${item.timestamp}`}>
+                    <td>
+                      {new Date(item.timestamp).toLocaleString(
+                        "en-us",
+                        options
+                      )}
+                    </td>
+                    <td>{item.endpoint}</td>
+                    <td>{item.response_code}</td>
+                    <td>{item.message}</td>
+                    <td>{item.user}</td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
           );
         default:
@@ -103,6 +188,9 @@ function Report({ id, accessToken, setAccessToken, refreshToken }) {
     };
     const start = async () => {
       try {
+        if (!accessToken || !refreshToken) {
+          return;
+        }
         const res = await axiosJWT.get(
           `http://localhost:3001/report?id=${id}`,
           {
@@ -112,7 +200,6 @@ function Report({ id, accessToken, setAccessToken, refreshToken }) {
             },
           }
         );
-        console.log(res.data);
         const reportTable = updateTable(res.data);
         setReportTable(reportTable);
       } catch (err) {
@@ -120,7 +207,7 @@ function Report({ id, accessToken, setAccessToken, refreshToken }) {
       }
     };
     start();
-  }, [id]);
+  }, [accessToken, refreshToken]);
 
   const refreshAccessToken = async () => {
     try {
