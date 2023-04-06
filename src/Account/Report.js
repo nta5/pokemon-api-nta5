@@ -1,33 +1,76 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
+import { BarChart, LineChart } from "./ChartComponent";
+import {
+  Chart,
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  PointElement,
+  LineElement,
+} from "chart.js";
+Chart.register(
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  PointElement,
+  LineElement
+);
 
 function Report({ id, accessToken, setAccessToken, refreshToken }) {
   const [reportTable, setReportTable] = useState("");
 
   useEffect(() => {
     const updateTable = (data) => {
-      var chart = "Chart goes here";
       switch (id) {
         case 1:
-          chart = data;
-          break;
+          var title = "Unique API users over the last 7 days";
+          var trackingDates = data.map((item) => item.tracking_date);
+          var userCount = data.map((item) => item.count);
+          var config = {
+            labels: trackingDates,
+            datasets: [
+              {
+                label: "Unique users",
+                data: userCount,
+                borderWidth: 1,
+              },
+            ],
+          };
+          return <LineChart chartData={config} chartTitle={title} />;
         case 2:
-          chart = data;
-          break;
+          var title = "Top API users over the last 7 days";
+          var trackingDates = data.map((item) => item.user);
+          var userCount = data.map((item) => item.count);
+          var config = {
+            labels: trackingDates,
+            datasets: [
+              {
+                label: "API calls",
+                data: userCount,
+                borderWidth: 1,
+              },
+            ],
+          };
+          return <BarChart chartData={config} chartTitle={title} />;
         case 3:
-          chart = data;
-          break;
+          return JSON.stringify(data);
         case 4:
-          chart = data;
-          break;
+          return JSON.stringify(data);
         case 5:
-          chart = data;
-          break;
+          return JSON.stringify(data);
         default:
-          chart = "No chart available";
+          return "No chart available";
       }
-      setReportTable(chart);
     };
     const start = async () => {
       try {
@@ -40,7 +83,9 @@ function Report({ id, accessToken, setAccessToken, refreshToken }) {
             },
           }
         );
-        updateTable(JSON.stringify(res.data));
+        console.log(res.data);
+        const reportTable = updateTable(res.data);
+        setReportTable(reportTable);
       } catch (err) {
         console.log(err);
       }
