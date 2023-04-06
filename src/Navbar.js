@@ -25,27 +25,24 @@ function Navbar() {
     }
   }, []);
 
-  const logout = () => {
-    const start = async () => {
-      try {
-        const authToken = user.authToken;
-        sessionStorage.removeItem("user");
-        setUser({});
-        userRef.current = null;
-        await axios.post(
-          "http://localhost:3001/logout",
-          {},
-          {
-            headers: {
-              authorization: authToken,
-            },
-          }
-        );
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    start();
+  const logout = async () => {
+    try {
+      const authToken = user.authToken;
+      sessionStorage.removeItem("user");
+      setUser({});
+      userRef.current = null;
+      await axios.post(
+        "http://localhost:3001/logout",
+        {},
+        {
+          headers: {
+            authorization: authToken,
+          },
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
