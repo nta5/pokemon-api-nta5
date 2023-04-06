@@ -46,7 +46,7 @@ function Report({ id, accessToken, setAccessToken, refreshToken }) {
               },
             ],
           };
-          return <LineChart chartData={config} chartTitle={title} />;
+          return <BarChart chartData={config} chartTitle={title} />;
         case 2:
           var title = "Top API users over the last 7 days";
           var trackingDates = data.map((item) => item.user);
@@ -67,7 +67,36 @@ function Report({ id, accessToken, setAccessToken, refreshToken }) {
         case 4:
           return JSON.stringify(data);
         case 5:
-          return JSON.stringify(data);
+          const options = {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+            second: "numeric",
+          };
+          return (
+            <table>
+              <tr>
+                <th>Timestamp</th>
+                <th>Endpoint</th>
+                <th>Error Code</th>
+                <th>Error Message</th>
+                <th>User</th>
+              </tr>
+              {data.map((item) => (
+                <tr>
+                  <td>
+                    {new Date(item.timestamp).toLocaleString("en-us", options)}
+                  </td>
+                  <td>{item.endpoint}</td>
+                  <td>{item.response_code}</td>
+                  <td>{item.message}</td>
+                  <td>{item.user}</td>
+                </tr>
+              ))}
+            </table>
+          );
         default:
           return "No chart available";
       }
@@ -134,7 +163,6 @@ function Report({ id, accessToken, setAccessToken, refreshToken }) {
 
   return (
     <>
-      <div>Report {id && id}</div>
       <div> {reportTable && reportTable}</div>
     </>
   );
