@@ -6,6 +6,7 @@ import axios from "axios";
 import "./App.css";
 
 function App() {
+  const [searchName, setSearchName] = useState("");
   const [typesSelectedArray, setTypesSelectedArray] = useState([]);
   const [pokemons, setPokemons] = useState([]);
   const [pokemonCount, setPokemonCount] = useState([]);
@@ -30,7 +31,7 @@ function App() {
   return (
     <>
       <Search
-        typesSelectedArray={typesSelectedArray}
+        setSearchName={setSearchName}
         setTypesSelectedArray={setTypesSelectedArray}
       />
 
@@ -38,6 +39,7 @@ function App() {
 
       <FilteredPokemon
         pokemons={pokemons}
+        searchName={searchName}
         typesSelectedArray={typesSelectedArray}
         setPokemonCount={setPokemonCount}
         pageNumber={pageNumber}

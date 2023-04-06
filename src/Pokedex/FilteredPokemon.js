@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 function FilteredPokemon({
   pokemons,
+  searchName,
   typesSelectedArray,
   setPokemonCount,
   pageNumber,
@@ -15,14 +16,24 @@ function FilteredPokemon({
     }
   };
 
+  const filterName = (pokemon) => {
+    if (searchName == "") {
+      return true;
+    } else {
+      searchName = searchName.toLowerCase();
+      return pokemon.name.english.toLowerCase().includes(searchName);
+    }
+  };
+
   const pokemonPerPage = 10;
   const startIndex = (pageNumber - 1) * pokemonPerPage;
   const endIndex = startIndex + pokemonPerPage;
+  pokemons = pokemons.filter(filterName);
   pokemons = pokemons.filter(filterTypes);
 
   useEffect(() => {
     setPokemonCount(pokemons.length);
-  }, [typesSelectedArray]);
+  }, [typesSelectedArray, searchName]);
 
   return (
     <div>

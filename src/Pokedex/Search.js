@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-function Search({ typesSelectedArray, setTypesSelectedArray }) {
+function Search({ setSearchName, setTypesSelectedArray }) {
   const [types, setTypes] = useState([]);
 
   useEffect(() => {
@@ -28,8 +28,21 @@ function Search({ typesSelectedArray, setTypesSelectedArray }) {
     }
   };
 
+  const handleSearchChange = (e) => {
+    e.preventDefault();
+    if (e.target.value !== "") {
+      setSearchName(e.target.value);
+    } else {
+      setSearchName("");
+    }
+  };
+
   return (
     <div>
+      <form>
+        <input onChange={handleSearchChange} type="text" placeholder="Search" />
+      </form>
+
       {types.map((type) => (
         <div key={type.english}>
           <input
