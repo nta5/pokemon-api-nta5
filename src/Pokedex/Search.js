@@ -38,22 +38,27 @@ function Search({ setSearchName, setTypesSelectedArray }) {
   };
 
   return (
-    <div>
-      <form>
-        <input onChange={handleSearchChange} type="text" placeholder="Search" />
-      </form>
+    <div className="search">
+      <input
+        className="search-bar"
+        onChange={handleSearchChange}
+        type="text"
+        placeholder="Search"
+      />
 
-      {types.map((type) => (
-        <div key={type.english}>
-          <input
-            type="checkbox"
-            value={type.english}
-            id={type.english}
-            onChange={handleCheckboxChange}
-          />
-          <label htmlFor={type.english}>{type.english}</label>
-        </div>
-      ))}
+      <ul className="search-type-selector">
+        {types.map((type) => (
+          <li key={type.english}>
+            <input
+              type="checkbox"
+              value={type.english}
+              id={type.english}
+              onChange={handleCheckboxChange}
+            />
+            <label htmlFor={type.english}>{type.english}</label>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

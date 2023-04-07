@@ -1,3 +1,33 @@
+.search {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.search-bar {
+  width: 100%;
+  max-width: 75vw;
+  min-height: 30px;
+  margin: 15px;
+  padding: 15px;
+  background-color: #c4bbb8;
+}
+
+.search-type-selector {
+  width: 100%;
+  max-width: 60vw;
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  font-size: medium;
+}
+
+.search-type-selector li {
+  margin: 15px;
+}
+
 .pokemon-container {
   display: flex;
   flex-wrap: wrap;
