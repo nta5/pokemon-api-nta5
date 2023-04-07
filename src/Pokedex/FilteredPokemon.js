@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import PokemonCard from "./PokemonCard";
 
 function FilteredPokemon({
   pokemons,
@@ -31,17 +31,30 @@ function FilteredPokemon({
   pokemons = pokemons.filter(filterName);
   pokemons = pokemons.filter(filterTypes);
 
+  const [popupId, setPopupId] = useState(null);
+  const onClickHandler = (id) => {
+    if (id == popupId) {
+      setPopupId(null);
+    } else {
+      setPopupId(id);
+    }
+  };
+
   useEffect(() => {
     setPokemonCount(pokemons.length);
   }, [typesSelectedArray, searchName]);
 
   return (
     <div>
-      <div className="pokemon-container">
+      <div className="pokemons">
         {pokemons
           .map((pokemon) => (
             <div key={pokemon.id}>
-              <Link to="/pokeInfo" state={{ pokeInfo: pokemon }}>
+              <div
+                className="pokemon-container"
+                key={pokemon.id}
+                onClick={() => onClickHandler(pokemon.id)}
+              >
                 <img
                   className="pokemon-image"
                   src={`https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/${String(
@@ -49,10 +62,15 @@ function FilteredPokemon({
                   ).padStart(3, "0")}.png`}
                   alt={pokemon.name.english}
                 />
-                <div>
-                  {pokemon.name.english}, {pokemon.type}
-                </div>
-              </Link>
+                <div>{pokemon.name.english}</div>
+                <div>{pokemon.type.map((type) => type + " ")}</div>
+              </div>
+              <div
+                className="pokemon-popup"
+                style={{ display: popupId == pokemon.id ? "" : "none" }}
+              >
+                <PokemonCard pokemon={pokemon}></PokemonCard>
+              </div>
             </div>
           ))
           .slice(startIndex, endIndex)}

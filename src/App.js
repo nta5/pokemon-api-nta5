@@ -35,7 +35,7 @@ function App() {
         setTypesSelectedArray={setTypesSelectedArray}
       />
 
-      <h1>Page number {pageNumber}</h1>
+      <h2>Page number {pageNumber}</h2>
 
       <FilteredPokemon
         pokemons={pokemons}

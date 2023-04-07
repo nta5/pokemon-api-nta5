@@ -4,7 +4,6 @@ import { Routes, Route, Link } from "react-router-dom";
 
 import Login from "./Login";
 import App from "./App";
-import PokemonInfo from "./Pokedex/PokemonInfo";
 import Register from "./Account/Register";
 
 import "./Navbar.css";
@@ -75,7 +74,6 @@ function Navbar() {
       </ul>
       <Routes>
         <Route path="/app" element={<App />} />
-        <Route path="/pokeInfo" element={<PokemonInfo />} />
         <Route path="/register" element={<Register />} />
         <Route
           path="/*"
