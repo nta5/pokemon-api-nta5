@@ -1,10 +1,13 @@
 import React, { useRef, useEffect, useState } from "react";
+import axios from "axios";
+import { Routes, Route, Link } from "react-router-dom";
+
 import Login from "./Login";
 import App from "./App";
 import PokemonInfo from "./Pokedex/PokemonInfo";
-import axios from "axios";
-import { Routes, Route, Link } from "react-router-dom";
 import Register from "./Account/Register";
+
+import "./Navbar.css";
 
 function Navbar() {
   const userRef = useRef(null);
@@ -46,8 +49,11 @@ function Navbar() {
   };
 
   return (
-    <div>
-      <ul>
+    <div className="nav-container">
+      <ul className="nav-bar">
+        <li>
+            <h1>Pokedex</h1>
+        </li>
         <li>
           <Link to="/">Login</Link>
         </li>
