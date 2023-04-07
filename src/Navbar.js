@@ -67,7 +67,7 @@ function Navbar() {
         )}
         {user?.username && (
           <li>
-            <Link to="/logout" onClick={logout}>
+            <Link to="/" onClick={logout}>
               Logout
             </Link>
           </li>
@@ -77,7 +77,6 @@ function Navbar() {
         <Route path="/app" element={<App />} />
         <Route path="/pokeInfo" element={<PokemonInfo />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/logout" element={<>Logged out</>} />
         <Route
           path="/*"
           element={<Login user={user} setUser={setUser} userRef={userRef} />}
