@@ -192,7 +192,7 @@ function Report({ id, accessToken, setAccessToken, refreshToken }) {
           return;
         }
         const res = await axiosJWT.get(
-          `http://localhost:3001/report?id=${id}`,
+          `${process.env.REACT_APP_HOSTED_SERVER}/report?id=${id}`,
           {
             headers: {
               authorization:
@@ -212,7 +212,7 @@ function Report({ id, accessToken, setAccessToken, refreshToken }) {
   const refreshAccessToken = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:3001/requestNewAccessToken",
+        `${process.env.REACT_APP_HOSTED_SERVER}/requestNewAccessToken`,
         {},
         {
           headers: {

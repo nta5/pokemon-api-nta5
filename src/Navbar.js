@@ -35,7 +35,7 @@ function Navbar() {
       setUser({});
       userRef.current = null;
       await axios.post(
-        "http://localhost:3001/logout",
+        `${process.env.REACT_APP_HOSTED_SERVER}/logout`,
         {},
         {
           headers: {
@@ -52,7 +52,7 @@ function Navbar() {
     <div className="nav-container">
       <ul className="nav-bar">
         <li>
-            <h1>Pokedex</h1>
+          <h1>Pokedex</h1>
         </li>
         <li>
           <Link to="/">Login</Link>

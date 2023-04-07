@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Dashboard from "./Account/Dashboard";
 
@@ -46,10 +46,13 @@ function Login({ user, setUser, userRef }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:3001/login", {
-        username,
-        password,
-      });
+      const res = await axios.post(
+        `${process.env.REACT_APP_HOSTED_SERVER}/login`,
+        {
+          username,
+          password,
+        }
+      );
 
       const storedUser = {
         username: res.data.user.username,
