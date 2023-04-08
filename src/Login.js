@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Dashboard from "./Account/Dashboard";
+import "./Login.css";
 
 function Login({ user, setUser, userRef }) {
   const [username, setUsername] = useState("");

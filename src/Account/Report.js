@@ -43,6 +43,8 @@ function Report({ id, accessToken, setAccessToken, refreshToken }) {
                 label: "Unique users",
                 data: userCount,
                 borderWidth: 1,
+                backgroundColor: ["#526760"],
+                borderColor: ["#374B4A"],
               },
             ],
           };
@@ -58,6 +60,8 @@ function Report({ id, accessToken, setAccessToken, refreshToken }) {
                 label: "API calls",
                 data: userCount,
                 borderWidth: 1,
+                backgroundColor: ["#526760"],
+                borderColor: ["#374B4A"],
               },
             ],
           };
