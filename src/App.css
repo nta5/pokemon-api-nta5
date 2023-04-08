@@ -76,3 +76,54 @@
 .selected {
   background-color: yellow;
 }
+
+form {
+  background-color: #efefef;
+  padding: 50px;
+  margin: auto;
+  display: flex;
+  max-width: 40%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+span {
+  font-size: 24px;
+  font-weight: bold;
+  display: block;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="password"] {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  outline: none;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+button[type="submit"] {
+  background-color: #526760;
+  width: 60%;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+button[type="submit"]:hover {
+  background-color: #374b4a;
+}

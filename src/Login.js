@@ -68,7 +68,7 @@ function Login({ user, setUser, userRef }) {
   };
 
   return (
-    <div>
+    <div className="dashboard">
       {user?.username ? (
         user?.role == "admin" ? (
           <>
@@ -90,13 +90,13 @@ function Login({ user, setUser, userRef }) {
           <br />
           <input
             type="text"
-            placeholder="username"
+            placeholder=" Username"
             onChange={(e) => setUsername(e.target.value)}
           />
           <br />
           <input
             type="password"
-            placeholder="password"
+            placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
           <br />
